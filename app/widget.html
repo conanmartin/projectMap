@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <style>
+
+      #container{
+        height: 100%;
+        position: relative;
+      }
+
+      #map {
+        height: 100%;
+      }
+
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #button{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 99;
+        background-color: #0099ff;
+        border: none;
+        color: white;
+        padding: 10px 10px;
+        text-align: center;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 15px;
+      }
+
+      #button:hover {
+        background-color: #006bb3;
+      }
+
+      h2 {
+        font-family:"ProximaNovaRegular",sans-serif;
+      }
+
+    </style>
+    <script  src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="ZohoEmbededAppSDK.min.js"></script>
+    <script type="text/javascript" async defer>
+      var markers = [];
+      var map;
+      ZOHO.embeddedApp.on("PageLoad",function(data){
+        initMap();
+        console.log('All assets are loaded');
+          console.log(data);
+          var id = data.EntityId;
+          console.log(id);
+          console.log("Page Loaded");
+          getLocation(id)
+
+        });
+
+        ZOHO.embeddedApp.init().then(function () {
+
+          ZOHO.CRM.UI.Resize({width:0,height:500})
+                  .then(function() {
+                    console.log(ZOHO.CRM.CONFIG.getCurrentUser());
+                  });
+      });
+      
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 53.3498, lng: -6.2603},
+          zoom: 8,
+          mapTypeControl: false
+        });
+      }
+
+      function closeWidget(){
+        ZOHO.CRM.UI.Resize({width:0,height:0})
+      }
+
+      function getLocation(id){
+        ZOHO.CRM.API.getRecord({Entity: "Projects", RecordID: id}).then(function (data) {
+          console.log(data);
+          var record = data.data[0];
+          var location = {lat: parseFloat(record.Single_Line_121), lng: parseFloat(record.Single_Line_17)};
+          console.log(location);
+          var marker = new google.maps.Marker({position: location, map: map});
+          markers.push(marker);
+          map.setCenter(location);
+          marker.addListener('click', function () {
+            window.open("https://www.google.com/maps?saddr=My+Location&daddr="+record.Single_Line_121+","+record.Single_Line_17, '_blank');
+          })
+          //https://www.google.com/maps/search/?api=1&query=58.698017,-152.522067
+        })
+      }
+
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <button id="button" onclick="closeWidget()">Close</button>
+      <div id="map"></div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAEwbPUCJkDZmTKGHqbwUplzYrc3QZ4Dlk&callback=initMap" async defer></script>
+  </body>
+</html>
