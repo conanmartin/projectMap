@@ -50,23 +50,18 @@
       var map;
       ZOHO.embeddedApp.on("PageLoad",function(data){
         initMap();
-        console.log('All assets are loaded');
-          console.log(data);
-          var id = data.EntityId;
-          console.log(id);
-          console.log("Page Loaded");
-          getLocation(id)
+        //console.log(data);
+        var id = data.EntityId;
+        //console.log(id);
+        getLocation(id)
 
-        });
-
-        ZOHO.embeddedApp.init().then(function () {
-
-          ZOHO.CRM.UI.Resize({width:0,height:500})
-                  .then(function() {
-                    console.log(ZOHO.CRM.CONFIG.getCurrentUser());
-                  });
       });
-      
+
+      ZOHO.embeddedApp.init().then(function () {
+
+      ZOHO.CRM.UI.Resize({width:0,height:500});
+      });
+
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 53.3498, lng: -6.2603},
@@ -84,7 +79,7 @@
           console.log(data);
           var record = data.data[0];
           var location = {lat: parseFloat(record.Single_Line_121), lng: parseFloat(record.Single_Line_17)};
-          console.log(location);
+          //console.log(location);
           var marker = new google.maps.Marker({position: location, map: map});
           markers.push(marker);
           map.setCenter(location);
