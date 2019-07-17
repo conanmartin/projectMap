@@ -45,6 +45,7 @@
     </style>
     <script  src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="ZohoEmbededAppSDK.min.js"></script>
+    <script src="common.js"></script>
     <script type="text/javascript" async defer>
       var markers = [];
       var map;
@@ -68,10 +69,6 @@
           zoom: 8,
           mapTypeControl: false
         });
-      }
-
-      function closeWidget(){
-        ZOHO.CRM.UI.Resize({width:0,height:0})
       }
 
       function getLocation(id){
