@@ -89,7 +89,13 @@
                         //console.log(project);
                         var projectName = project.Name;
                         var projectSector = project.Sector;
+                        if (projectSector == null){
+                            projectSector = "Unknown";
+                        }
                         var projectStartDate = project.Start_Date;
+                        if (projectStartDate == null){
+                            projectStartDate = "Unknown";
+                        }
                         var latitude = parseFloat(project.Single_Line_121);
                         var longitude = parseFloat(project.Single_Line_17);
                         var location = {lat: latitude,lng: longitude};
