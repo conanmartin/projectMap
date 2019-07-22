@@ -86,9 +86,10 @@
                     //console.log(id);
                     ZOHO.CRM.API.getRecord({Entity:"Projects", RecordID:id}).then(function (data) {
                         var project = data.data[0];
-                        console.log(project);
+                        //console.log(project);
                         var projectName = project.Name;
                         var projectSector = project.Sector;
+                        var projectStartDate = project.Start_Date;
                         var latitude = parseFloat(project.Single_Line_121);
                         var longitude = parseFloat(project.Single_Line_17);
                         var location = {lat: latitude,lng: longitude};
@@ -101,14 +102,15 @@
                         //     window.open("https://www.google.com/maps?saddr=My+Location&daddr="+latitude+","+longitude, '_blank');
                         // });
                         var directionsStrings = "https://www.google.com/maps?saddr=My+Location&daddr="+latitude+","+longitude;
-                        //var projectString = "https://crm.constructionbos.com/crm/tab/CustomModule1/"+id;
-                        var projectURL = "https://cbos.zohosandbox.eu/crm/tab/CustomModule1/"+id;
+                        var projectURL = "https://crm.constructionbos.com/crm/tab/CustomModule1/"+id;
+                        // var projectURL = "https://cbos.zohosandbox.eu/crm/tab/CustomModule1/"+id;
                         var infoContent = '<div id="content'+id+'">'+
                             '<div id="siteNotice">' +
                             '</div>' +
                             '<div id="bodyContent">' +
                             '<p>Project Name: '+projectName+'</p>'+
                             '<p>Sector: '+projectSector+'</p>'+
+                            '<p>Start Date: '+projectStartDate+'</p>'+
                             '<a href=' + directionsStrings + ' target="_blank">Directions</a>' +
                             '<br><br>' +
                             '<a href=' + projectURL + ' target="_blank">View Project</a>' +
@@ -133,20 +135,6 @@
                 }
 
             });
-
-            // ZOHO.CRM.API.getRecord({Entity: "Projects", RecordID: id}).then(function (data) {
-            //     console.log(data);
-            //     var record = data.data[0];
-            //     var location = {lat: parseFloat(record.Single_Line_121), lng: parseFloat(record.Single_Line_17)};
-            //     //console.log(location);
-            //     var marker = new google.maps.Marker({position: location, map: map});
-            //     markers.push(marker);
-            //     map.setCenter(location);
-            //     marker.addListener('click', function () {
-            //         window.open("https://www.google.com/maps?saddr=My+Location&daddr="+record.Single_Line_121+","+record.Single_Line_17, '_blank');
-            //     })
-            //     //https://www.google.com/maps/search/?api=1&query=58.698017,-152.522067
-            // })
         }
 
 

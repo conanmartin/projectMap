@@ -73,15 +73,15 @@
 
       function getLocation(id){
         ZOHO.CRM.API.getRecord({Entity: "Projects", RecordID: id}).then(function (data) {
-          console.log(data);
-          var record = data.data[0];
-          var location = {lat: parseFloat(record.Single_Line_121), lng: parseFloat(record.Single_Line_17)};
+          //console.log(data);
+          var project = data.data[0];
+          var location = {lat: parseFloat(project.Single_Line_121), lng: parseFloat(project.Single_Line_17)};
           //console.log(location);
           var marker = new google.maps.Marker({position: location, map: map});
           markers.push(marker);
           map.setCenter(location);
           marker.addListener('click', function () {
-            window.open("https://www.google.com/maps?saddr=My+Location&daddr="+record.Single_Line_121+","+record.Single_Line_17, '_blank');
+            window.open("https://www.google.com/maps?saddr=My+Location&daddr="+project.Single_Line_121+","+project.Single_Line_17, '_blank');
           })
           //https://www.google.com/maps/search/?api=1&query=58.698017,-152.522067
         })
