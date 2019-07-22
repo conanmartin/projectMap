@@ -125,10 +125,13 @@
                         //console.log(location)
                     }).then(function () {
                         map.fitBounds(bounds);
+                        var listener = google.maps.event.addListener(map, "idle", function() {
+                            if (map.getZoom() > 14) map.setZoom(14);
+                            google.maps.event.removeListener(listener);
+                        });
                     })
                 }
-                //console.log(locations);
-                //setMarkers(locations);
+
             });
 
             // ZOHO.CRM.API.getRecord({Entity: "Projects", RecordID: id}).then(function (data) {
@@ -146,20 +149,6 @@
             // })
         }
 
-        function setMarkers(locations){
-            // console.log(locations);
-            locations.forEach(function (location) {
-                // console.log("hello");
-                var marker = new google.maps.Marker({position: location, map: map});
-                markers.push(marker);
-                // console.log(marker);
-                marker.addListener('click', function () {
-                    window.open("https://www.google.com/maps?saddr=My+Location&daddr="+location[0]+","+location[1], '_blank');
-                });
-            //     //https://www.google.com/maps/search/?api=1&query=58.698017,-152.522067
-            });
-            //map.setCenter(location);
-        }
 
     </script>
 </head>
